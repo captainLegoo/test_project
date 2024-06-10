@@ -112,7 +112,6 @@
                         <id>build-image</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>build</goal>
 <!--                            <goal>push</goal>-->
                         </goals>
                     </execution>
