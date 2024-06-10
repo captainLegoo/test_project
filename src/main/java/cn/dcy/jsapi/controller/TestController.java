@@ -15,4 +15,9 @@ public class TestController {
     public String test() {
         return "test";
     }
+
+    @RequestMapping(path = "/hello", method = RequestMethod.GET)
+    public String hello() {
+        return "hello";
+    }
 }
