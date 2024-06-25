@@ -1,57 +1,27 @@
-name: Java CI with Maven
+name: Java Code Check
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        java-version: [11, 17]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up JDK ${{ matrix.java-version }}
-      uses: actions/setup-java@v3
-      with:
-        java-version: ${{ matrix.java-version }}
-        distribution: 'adopt'
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
 
-    - name: Cache Maven packages
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
+      - name: Run Maven build
+        run: mvn clean verify
 
-    - name: Validate Maven POM
-      run: mvn validate
-
-    - name: Install dependencies
-      run: mvn install -DskipTests
-
-    - name: Checkstyle
-      run: mvn checkstyle:check
-
-    - name: Compile project
-      run: mvn compile
-
-    - name: Run tests
-      run: mvn test
-
-    - name: Package project
-      run: mvn package -DskipTests
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: spring-boot-app
-        path: target/*.jar
+      - name: Check code style
+        uses: github/super-linter@v3
+        with:
+          repo-token: ${{ github.token }}
+          enabled-linters: 'java'
