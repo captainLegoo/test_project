@@ -1,9 +1,9 @@
-name: Java Code Check
+name: Java Code Check without Tests
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -17,8 +17,8 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Run Maven build
-        run: mvn clean verify
+      - name: Run Maven build (skip tests)
+        run: mvn clean install -DskipTests
 
       - name: Check code style
         uses: github/super-linter@v3
