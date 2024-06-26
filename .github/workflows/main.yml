@@ -7,29 +7,22 @@ on:
     branches: [ master ]
  
 jobs:
-  lint:
+  check-java-code:
     runs-on: ubuntu-latest
  
     steps:
     - uses: actions/checkout@v2
  
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
       with:
-        python-version: 3.8
+        java-version: 1.8
  
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8
-    - name: Lint with flake8
-      run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      env:
-        FLAKE8_PYTHON_IGNORE: 'E203'
+    - name: Checkstyle
+      runs: ./gradlew checkstyle
  
-    - name: Upload lint results
-      uses: actions/upload-artifact@v2
-      with:
-        name: lint-results
-        path: ./
+    - name: FindBugs
+      runs: ./gradlew findbugsMain
+ 
+    - name: PMD
+      runs: ./gradlew pmdMain
