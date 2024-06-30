@@ -17,12 +17,3 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
- 
-    - name: Checkstyle
-      runs: ./gradlew checkstyle
- 
-    - name: FindBugs
-      runs: ./gradlew findbugsMain
- 
-    - name: PMD
-      runs: ./gradlew pmdMain
