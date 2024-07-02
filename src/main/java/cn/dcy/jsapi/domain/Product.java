@@ -21,7 +21,7 @@ public class Product{
     private String name;
     private Rating rating;
     private int priceCents;
-    private List<String> keywords;
+    private List<String> keywords
 
     @Data
     @AllArgsConstructor
