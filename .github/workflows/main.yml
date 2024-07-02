@@ -16,6 +16,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
+        distribution: 'temurin'
 
     - name: Install Maven
       run: sudo apt-get update && sudo apt-get install maven -y
